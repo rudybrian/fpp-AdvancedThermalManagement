@@ -1,0 +1,18 @@
+{
+	"repoName": "fpp-AdvancedThermalManagement",
+	"name": "Advanced Thermal Management",
+	"author": "Brian Rudy (Setarcos)",
+	"description": "This plugin allows you to use Pi PWM and/or MAX31760 for temperature monitoring and fan management.",
+	"homeURL": "https://github.com/rudybrian/fpp-AdvancedThermalManagement",
+	"srcURL": "https://github.com/rudybrian/fpp-AdvancedThermalManagement.git",
+	"bugURL": "https://github.com/rudybrian/fpp-AdvancedThermalManagement/issues",
+	"allowUpdates": 1,
+	"versions": [
+		{
+			"minFPPVersion": "4.0",
+			"maxFPPVersion": "0",
+			"branch": "master",
+			"sha": ""
+		}
+	]
+}

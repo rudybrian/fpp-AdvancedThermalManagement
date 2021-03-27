@@ -1,0 +1,407 @@
+{
+    "settingGroups": {
+        "MAX31760Settings": {
+            "description": "MAX31760 Settings",
+            "settings": [
+                "TachCountThreshold",
+                "RemoteSensorIdealityFactor",
+                "AlertMask",
+                "AlertMaskLocalTempHigh",
+                "AlertMaskLocalOverTemp",
+                "AlertMaskRemoteTempHigh",
+                "AlertMaskRemoteOverTemp",
+                "AlertMaskTach2",
+                "AlertMaskTach1",
+                "LUTHysteresis",
+                "PWMFrequency",
+                "PWMPolarity",
+                "TemperatureIndexSource",
+                "PWMRampRate",
+                "TachFull",
+                "PulseStretch",
+                "Tach2",
+                "Tach1",
+                "StandbyMode",
+                "AlertSelection",
+                "SpinUp",
+                "FanFaultMode",
+                "FSInput",
+                "RotationDetectionPolarity",
+                "FanSenseSignalType",
+                "DirectFanControl"
+            ]
+        }
+    },
+    "settings": {
+        "TachCountThreshold": {
+            "name": "MAX31760TachCountThreshold",
+            "description": "Tachometer count threshold",
+            "tip": "Tachometer count threshold",
+            "level": 0,
+            "type": "number",
+            "min": 0,
+            "max": 10000,
+            "step": 1,
+            "suffix": "RPM",
+            "onChange": "TachCountThresholdCf"
+        },
+        "RemoteSensorIdealityFactor": {
+            "name": "MAX31760TachCountThreshold",
+            "description": "Remote sensor ideality factor",
+            "tip": "Remote sensor ideality factor. See usage notes on the plugin homepage",
+            "level": 1,
+            "type": "select",
+            "onChange": "RemoteSensorIdealityFactorCf",
+            "options": {
+               "0.9844": "0.9844",
+               "0.9853": "0.9853",
+               "0.9863": "0.9863",
+               "0.9873": "0.9873",
+               "0.9882": "0.9882",
+               "0.9892": "0.9892",
+               "0.9902": "0.9902",
+               "0.9911": "0.9911",
+               "0.9921": "0.9921",
+               "0.9931": "0.9931",
+               "0.9941": "0.9941",
+               "0.9950": "0.9950",
+               "0.9960": "0.9960",
+               "0.9970": "0.9970",
+               "0.9980": "0.9980",
+               "0.9990": "0.9990",
+               "1.0000": "1.0000",
+               "1.0010": "1.0010",
+               "1.0020": "1.0020",
+               "1.0030": "1.0030",
+               "1.0040": "1.0040",
+               "1.0050": "1.0050",
+               "1.0060": "1.0060",
+               "1.0070": "1.0070",
+               "1.0080": "1.0080",
+               "1.0090": "1.0090",
+               "1.0100": "1.0100",
+               "1.0110": "1.0110",
+               "1.0120": "1.0120",
+               "1.0130": "1.0130",
+               "1.0141": "1.0141",
+               "1.0151": "1.0151",
+               "1.0161": "1.0161",
+               "1.0171": "1.0171",
+               "1.0182": "1.0182",
+               "1.0192": "1.0192",
+               "1.0202": "1.0202",
+               "1.0213": "1.0213",
+               "1.0223": "1.0223",
+               "1.0233": "1.0233",
+               "1.0244": "1.0244",
+               "1.0254": "1.0254",
+               "1.0265": "1.0265",
+               "1.0275": "1.0275",
+               "1.0286": "1.0286",
+               "1.0296": "1.0296",
+               "1.0307": "1.0307",
+               "1.0317": "1.0317",
+               "1.0328": "1.0328",
+               "1.0338": "1.0338",
+               "1.0349": "1.0349",
+               "1.0360": "1.0360",
+               "1.0370": "1.0370",
+               "1.0381": "1.0381",
+               "1.0392": "1.0392",
+               "1.0402": "1.0402",
+               "1.0413": "1.0413",
+               "1.0424": "1.0424",
+               "1.0435": "1.0435",
+               "1.0445": "1.0445",
+               "1.0456": "1.0456",
+               "1.0467": "1.0467",
+               "1.0478": "1.0478",
+               "1.0489": "1.0489"
+            }
+        },
+        "AlertMask": {
+            "name": "MAX31760AlertMask",
+            "description": "Enable alert mask",
+            "tip": "Enable selected alarm conditions",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskCf",
+            "children": {
+               "1": [
+                  "AlertMaskLocalTempHigh",
+                  "AlertMaskLocalOverTemp",
+                  "AlertMaskRemoteTempHigh",
+                  "AlertMaskRemoteOverTemp",
+                  "AlertMaskTach2",
+                  "AlertMaskTach1"
+               ]
+            }
+        },
+        "AlertMaskLocalTempHigh": {
+            "name": "MAX31760AlertMaskLocalTempHigh",
+            "description": "Disable local temp high alarm",
+            "tip": "Enable to suppress local temp high alarm",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskLocalTempHighCf"
+        },
+        "AlertMaskLocalOverTemp": {
+            "name": "MAX31760AlertMaskLocalOverTemp",
+            "description": "Disable local overtemp alarm",
+            "tip": "Enable to suppress local overtemp alarm",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskLocalOverTempCf"
+        },
+        "AlertMaskRemoteTempHigh": {
+            "name": "MAX31760AlertMaskRemoteTempHigh",
+            "description": "Disable remote temp high alarm",
+            "tip": "Enable to suppress remote temp high alerts",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskRemoteTempHighCf"
+        },
+        "AlertMaskRemoteOverTemp": {
+            "name": "MAX31760AlertMaskRemoteOverTemp",
+            "description": "Disable remote overtemp alarm",
+            "tip": "Enable to suppress remote overtemp alarm",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskRemoteOverTempCf"
+        },
+        "AlertMaskTach2": {
+            "name": "MAX31760AlertMaskTach2",
+            "description": "Disable tach 2 alarm",
+            "tip": "Enable to suppress tach 2 alarm",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskTach2Cf"
+        },
+        "AlertMaskTach1": {
+            "name": "MAX31760AlertMaskTach1",
+            "description": "Disable tach 1 alarm",
+            "tip": "Enable to suppress tach 1 alarm",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "AlertMaskTach1Cf"
+        },
+        "LUTHysteresis": {
+            "name": "MAX31760LUTHysteresis",
+            "description": "LUT Hysteresis",
+            "tip": "Look Up Table hysteresis",
+            "level": 1,
+            "type": "select",
+            "onChange": "LUTHysteresisCf",
+            "options": {
+               "2\u2103": 2,
+               "4\u2103": 4
+            }
+        },
+        "PWMFrequency": {
+            "name": "MAX31760PWMFrequency",
+            "description": "PWM Frequency",
+            "tip": "PWM Frequency",
+            "level": 1,
+            "type": "select",
+            "onChange": "PWMFrequencyCf",
+            "options": {
+               "33Hz": "33Hz",
+               "150Hz": "150Hz",
+               "1500Hz": "1500Hz",
+               "25kHz": "25kHz"
+            }
+        },
+        "PWMPolarity": {
+            "name": "MAX31760PWMPolarity",
+            "description": "PWM Polarity",
+            "tip": "PWM Polarity",
+            "level": 1,
+            "type": "select",
+            "onChange": "PWMPolarityCf",
+            "options": {
+               "positive": "positive",
+               "negative": "negative"
+            }
+        },
+        "TemperatureIndexSource": {
+            "name": "MAX31760TemperatureIndexSource",
+            "description": "Temperature Index Source",
+            "tip": "Temperature Index Source",
+            "level": 0,
+            "type": "select",
+            "onChange": "TemperatureIndexSourceCf",
+            "options": {
+               "local": "local",
+               "remote": "remote",
+               "max of local and remote": "maximum"
+            }
+        },
+        "PWMRampRate": {
+            "name": "MAX31760PWMRampRate",
+            "description": "PWM Ramp Rate",
+            "tip": "PWM ramp rate",
+            "level": 1,
+            "type": "select",
+            "onChange": "PWMRampRateCf",
+            "options": {
+               "slow": "slow",
+               "slow-medium": "slow-medium",
+               "medium-fast": "medium-fast",
+               "fast": "fast"
+            }
+        },
+        "TachFull": {
+            "name": "MAX31760TachFull",
+            "description": "Tach Full",
+            "tip": "Detect fan failure only when duty cycle is 100",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "TachFullCf"
+        },
+        "PulseStretch": {
+            "name": "MAX31760PulseStretch",
+            "description": "Pulse Stretch",
+            "tip": "Pulse Stretch Enable. Applies only for 33Hz PWM",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "PulseStretchCf"
+        },
+        "TachFull": {
+            "name": "MAX31760TachFull",
+            "description": "Tach Full",
+            "tip": "Detect fan failure only when duty cycle is 100\u0025",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "TachFullCf"
+        },
+        "Tach1": {
+            "name": "MAX31760Tach1",
+            "description": "Tach 1",
+            "tip": "Tach 1 enable",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "Tach1Cf"
+        },
+        "Tach2": {
+            "name": "MAX31760Tach2",
+            "description": "Tach 2",
+            "tip": "Tach 2 enable",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "Tach2Cf"
+        },
+        "StandbyMode": {
+            "name": "MAX31760StandbyMode",
+            "description": "Standby Mode",
+            "tip": "Standby mode enable. Note that enabling this essentially puts the device to sleep.",
+            "level": 3,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "StandbyModeCf"
+        },
+        "AlertSelection": {
+            "name": "MAX31760AlertSelection",
+            "description": "Alert Selection",
+            "tip": "Alert selection. Use fault indicator to set comparitor mode.",
+            "level": 2,
+            "type": "select",
+            "onChange": "AlertSelectionCf",
+            "options": {
+               "interrupt": "interrupt",
+               "fault indicator": "comparator"
+            }
+        },
+        "SpinUp": {
+            "name": "MAX31760SpinUp",
+            "description": "Spin Up",
+            "tip": "Spin-up enable. The PWM duty cycle is 100\u0025 until the end criterion is met.",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "SpinUpCf"
+        },
+        "FanFaultMode": {
+            "name": "MAX31760FanFaultMode",
+            "description": "Fan Fault Mode",
+            "tip": "Fan fault mode",
+            "level": 2,
+            "type": "select",
+            "onChange": "FanFaultModeCf",
+            "options": {
+               "interrupt": "interrupt",
+               "fault indicator": "comparator"
+            }
+        },
+        "FSInput": {
+            "name": "MAX31760FSInput",
+            "description": "FS Input Enable",
+            "tip": "Externally driving FS low forces 100\u0025 duty cycle.",
+            "level": 3,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "FSInputCf"
+        },
+        "RotationDetectionPolarity": {
+            "name": "MAX31760RotationDetectionPolarity",
+            "description": "RotationDetectionPolarity",
+            "tip": "Rotation-detection RD signal-polarity selection.",
+            "level": 1,
+            "type": "select",
+            "onChange": "RotationDetectionPolarityCf",
+            "options": {
+               "low": "low",
+               "high": "high"
+            }
+        },
+        "FanSenseSignalType": {
+            "name": "MAX31760FanSenseSignalType",
+            "description": "Fan-Sense Signal Type",
+            "tip": "Fan-sense signal type",
+            "level": 1,
+            "type": "select",
+            "onChange": "FanSenseSignalTypeCf",
+            "options": {
+               "square-wave": "square-wave",
+               "RD-signal": "RD-signal"
+            }
+        },
+        "DirectFanControl": {
+            "name": "MAX31760DirectFanControl",
+            "description": "Direct Fan Control",
+            "tip": "Directly control the fan speed with a manual setting. Overrides temperature-based control.",
+            "level": 0,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "onChange": "DirectFanControlCf"
+        }
+    }
+}
+
