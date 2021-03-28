@@ -330,13 +330,24 @@ canvas.matrix {
             </div>
 
             <div id="tab-max31760LUT" class='atm-middle-panel'>
-               <table border=1><tr><td valign='top'>
-                  <table border=1>
-                    <tr><td>
-                    LUT Stuff
-                    </td></tr>
-                  </table>
-               </table>
+<?
+               $extraData = "<div class='form-actions'><input type='button' class='buttons' value='Save RAM to EEPROM' onClick='GetGeoLocation();'><input type='button' class='buttons' value='Load EEPROM to RAM' onClick='GetGeoLocation();'></div>";
+               PrintPluginSettingGroupTable($pluginName, "MAX31760PWMLUTSettings", $extraData);
+?>
+               <br>
+               <div class="backdrop">
+                  <div class="row">
+                     <? if ($uiLevel >= 1) { ?>
+                        <div class="col-auto"><i class='fas fa-fw fa-graduation-cap ui-level-1'></i> - Advanced Level Setting</div>
+                     <? } ?>
+                     <? if ($uiLevel >= 2) { ?>
+                        <div class="col-auto"><i class='fas fa-fw fa-flask ui-level-2'></i> - Experimental Level Setting</div>
+                     <? } ?>
+                     <? if ($uiLevel >= 3) { ?>
+                        <div class="col-auto"><i class='fas fa-fw fa-code ui-level-3'></i> - Developer Level Setting</div>
+                     <? } ?>
+                  </div>
+               </div>
             </div>
 
 			</div>
