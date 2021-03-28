@@ -30,9 +30,115 @@
                 "FanSenseSignalType",
                 "DirectFanControl"
             ]
+        },
+        "PiPWMSettings": {
+            "description": "Pi PWM Settings",
+            "settings": [
+                "PinToPWM",
+                "TempSetpoint",
+                "InvertDutyCycle",
+                "MinFanSpeed",
+                "MinFanTurnOff",
+                "LogLevel",
+                "VerboseLogging",
+                "VerboseTempThreshold"
+            ]
         }
     },
     "settings": {
+        "VerboseLogging": {
+            "name": "VerboseLogging",
+            "description": "Verbose Logging",
+            "tip": "Log additional details to aid in initial setup and debugging",
+            "level": 3,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false,
+            "children": {
+                "1": [
+                    "VerboseTempThreshold"
+                ]
+            }
+        },
+        "VerboseTempThreshold": {
+            "name": "VerboseTempThreshold",
+            "description": "Verbose Temp Threshold",
+            "tip": "With Verbose Logging enabled, print to the log when the temperature changes by this amount even if the fan speed remains the same.",
+            "level": 3,
+            "type": "number",
+            "min": 1,
+            "max": 10,
+            "default": 1,
+            "step": 1,
+            "suffix": "\u0025"
+        },
+        "LogLevel": {
+            "name": "LogLevel",
+            "description": "LogLevel",
+            "tip": "Default INFO level logging. Could also be DEBUG or WARNING.",
+            "level": 1,
+            "type": "select",
+            "options": {
+               "Info": "INFO",
+               "Warning": "WARNING",
+               "Debug": "DEBUG"
+            }
+        },
+        "MinFanTurnOff": {
+            "name": "MinFanTurnOff",
+            "description": "Min Fan Turn Off",
+            "tip": "When using MinFanSpeed, allow the fan to turn off when duty cycle is less than MinFanSpeed",
+            "level": 1,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false
+        },
+        "MinFanSpeed": {
+            "name": "MinFanSpeed",
+            "description": "Minimum Fan Speed",
+            "tip": "Some fans don't work properly if you decrease the duty cycle below a certain value.",
+            "level": 0,
+            "type": "number",
+            "min": 0,
+            "max": 90,
+            "default": 10,
+            "step": 1,
+            "suffix": "\u0025"
+        },
+        "PinToPWM": {
+            "name": "PinToPWM",
+            "description": "GPIO Pin to PWM",
+            "tip": "GPIO pin to use for fan control PWM. Note that only hardware GPIO pins can be used at this time.",
+            "level": 0,
+            "type": "select",
+            "options": {
+               "12": "12",
+               "18": "18",
+               "19": "19",
+               "27": "27"
+            }
+        },
+        "TempSetpoint": {
+            "name": "TempSetpoint",
+            "description": "Temperature setpoint",
+            "tip": "The target temperature that the controller attempts to keep the temperature below.",
+            "level": 0,
+            "type": "number",
+            "min": 20,
+            "max": 80,
+            "default": 45,
+            "step": 1,
+            "suffix": "\u2103"
+        },
+        "InvertDutyCycle": {
+            "name": "InvertDutyCycle",
+            "description": "Invert Duty Cycle",
+            "tip": "Invert duty cycle. Enable if using a four wire PWM fan with open collector outputs i.e. PiFace",
+            "level": 2,
+            "type": "checkbox",
+            "checkedValue": true,
+            "uncheckedValue": false
+        },
         "TachCountThreshold": {
             "name": "MAX31760TachCountThreshold",
             "description": "Tachometer count threshold",
@@ -267,7 +373,7 @@
         "TachFull": {
             "name": "MAX31760TachFull",
             "description": "Tach Full",
-            "tip": "Detect fan failure only when duty cycle is 100",
+            "tip": "Detect fan failure only when duty cycle is 100\u0025",
             "level": 0,
             "type": "checkbox",
             "checkedValue": true,
