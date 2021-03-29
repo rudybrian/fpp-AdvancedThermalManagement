@@ -146,7 +146,6 @@ canvas.matrix {
 </style>
 
 <div class='fppTabs'>
-	<div class='title'>Advanced Thermal Management</div>
 	<div id="atmTabs">
 		<ul>
 			<li><a href="#tab-atmstatus">Status</a></li>

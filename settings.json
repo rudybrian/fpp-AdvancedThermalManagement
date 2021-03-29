@@ -576,7 +576,7 @@
         },
         "PWMLUT2": {
             "name": "MAX31760PWMLUT2",
-            "description": "-18\u2103 to 20\u2103",
+            "description": "18\u2103 to 20\u2103",
             "tip": "Set the PWM duty cycle to this value in the given temperature range.",
             "level": 2,
             "type": "number",
