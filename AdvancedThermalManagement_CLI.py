@@ -8,20 +8,20 @@ import subprocess
 import socket
 from sys import argv
 from time import sleep
+from datetime import datetime
 
 if len(argv) <= 1:
-    print 'Usage:'
-    print '   --list     | Used by fppd at startup. Used to start up the Si4713_RDS_Updater.py script'
-    print '   --reset    | Function by plugin_setup.php to reset the GPIO pin connected to the Si4713'
-    print '   --exit     | Function used to shutdown the Si4713_RDS_Updater.py script'
-    print '   --type media --data \'{...}\'    | Used by fppd when a new items starts in a playlist'
-    print '   --type playlist --data \'{...}\' | Used by fppd when a playlist starts or stops'
-    print 'Note: Running with sudo might be needed for manual execution'
+    print('Usage:')
+    print('   --init     | Used to start up the AdvancedThermalManagement_Updater.py script')
+    print('   --exit     | Function used to shutdown the AdvancedThermalManagement_Updater.py script')
+    print('   --command jsondata \'{...}\'    | Send the JSON encoded command')
+    print('Note: Running with sudo might be needed for manual execution')
     exit()
 
 script_dir = os.path.dirname(os.path.abspath(argv[0]))
 
-logging.basicConfig(filename=script_dir + '/AdvancedThermalManagement_CLI.log', level=logging.INFO, format='%(asctime)s:%(name)s:%(levelname)s:%(message)s')
+#logging.basicConfig(filename=script_dir + '/AdvancedThermalManagement_CLI.log', level=logging.INFO, format='%(asctime)s:%(name)s:%(levelname)s:%(message)s')
+logging.basicConfig(filename=script_dir + '/AdvancedThermalManagement_CLI.log', level=logging.DEBUG, format='%(asctime)s:%(name)s:%(levelname)s:%(message)s')
 logging.info('----------')
 logging.debug('Arguments %s', argv[1:])
 
@@ -51,10 +51,37 @@ except OSError as oe:
         logging.debug('Fifo already exists')
 
 
-with open(fifo_path, 'w') as fifo:
+with open(fifo_path, 'w') as fifow:
     logging.info('Processing %s', argv[1])
     if argv[1] == '--exit':
         # Not used by FPPD, but useful for testing
-        fifo.write('EXIT\n')
+        fifow.write('EXIT\n')
+        exit()
+    elif argv[1] == '--command' and argv[2] == 'jsondata' and len(argv) == 4:
+       logging.info('Command JSON')
+       logging.debug('JSON command=%s', argv[3])
+       try:
+           json_command = json.loads(argv[3])
+       except ValueError:  # includes simplejson.decoder.JSONDecodeError
+           print('Decoding JSON has failed')
+       else:
+           # Do some stuff and return a response
+           fifow.write('{"Request": ' + argv[3] + '}')
+    else:
+        print('Invalid command')
+        exit()
     logging.debug('Processing done')
+
+
+with open(fifo_path, 'r') as fifor:
+    for i in range(2):
+        line = fifor.readline().rstrip()
+        if len(line) > 0:
+            logging.debug('Received response line %s', line)
+            print(line)
+            exit()
+        else:
+            # Sleep until the top of the next second
+            sleep ((1000000 - datetime.now().microsecond) / 1000000.0)
+
 
