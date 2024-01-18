@@ -7,6 +7,8 @@ import errno
 import atexit
 import socket
 import subprocess
+import board
+from adafruit_emc2101.emc2101_lut import EMC2101_LUT as EMC2101
 from sys import argv
 from time import sleep
 from datetime import datetime
@@ -23,12 +25,19 @@ device_addresses = {
                    "0x57":"MAX31760"
                    }
 
+# The device reference dict with bus_address as keys and object as the value
+device = {}
+
 def parseCommand(command):
     "Parse command"
     if ("detectI2CDevices" in command): 
         return(detectI2CDevicesCommand(command["detectI2CDevices"]));
+    elif ("initDevice" in command):
+        return(initDeviceCommand(command["initDevice"]["bus"], command["initDevice"]["address"]))
+    elif ("getTemp" in command):
+        return(getTempCommand(command["getTemp"]))
     else:
-        error_response = {"Error":"Invalid Command"}
+        error_response = {"Error":"parseCommand(): Invalid Command"}
         return(error_response)
 
 def detectI2CDevicesCommand(bus):
@@ -43,7 +52,34 @@ def detectI2CDevicesCommand(bus):
             y=1 # we need to put something here to catch eceptions or python complains about formatting
     logging.debug("returning:%s", json.dumps(detected_devices))
     return(detected_devices)
-   
+
+def initDeviceCommand(bus,address):
+    "Initialize the device on the given bus at the given address"
+    response = {}
+    if (device_addresses[address] == "EMC2101"):
+        # This is a EMC2101 which can only use a single address
+        devkey = bus + "_" + address
+        device[devkey] = EMC2101(board.I2C())
+        # We probably want to update the device registers based on current settings as well
+        logging.info('Initialized %s: %s', devkey, "EMC2101 (part={}.{}, rev={})".format(device[devkey].part_info[1], device[devkey].part_info[0], device[devkey].part_info[2]))
+        response = {"Success":"Initialized " + devkey + ": EMC2101 (part={}.{}, rev={})".format(device[devkey].part_info[1], device[devkey].part_info[0], device[devkey].part_info[2])}
+    else:
+        response = {"Error": "Unsupported device"}
+    return(response)
+
+def getTempCommand(devkey):
+    "Get the temperature(s) from the given device"
+    response = {}
+    if (devkey.endswith("0x4c")):
+        # probably want to make this more flexible
+        logging.debug('Device %s: %s', devkey, ": EMC2101 internal temp={}C, external temp={}C".format(device[devkey].internal_temperature, device[devkey].external_temperature))
+        # need to cast the values to strings or we loose the precision of the external temp sensor
+        response = {devkey : {"internal": str(device[devkey].internal_temperature), "external": str(device[devkey].external_temperature)}}
+    else:
+        response = {"Error": "Unsupported device"}
+    return(response)
+
+
 # Setup logging
 script_dir = os.path.dirname(os.path.abspath(argv[0]))
 
