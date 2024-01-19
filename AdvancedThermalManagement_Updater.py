@@ -36,6 +36,10 @@ def parseCommand(command):
         return(initDeviceCommand(command["initDevice"]["bus"], command["initDevice"]["address"]))
     elif ("getTemp" in command):
         return(getTempCommand(command["getTemp"]))
+    elif ("getFanSpeed" in command):
+        return(getFanSpeedCommand(command["getFanSpeed"]))
+    elif ("setManualFanSpeed" in command):
+        return(setManualFanSpeedCommand(command["setManualFanSpeed"]["device"], command["setManualFanSpeed"]["duty"]))
     else:
         error_response = {"Error":"parseCommand(): Invalid Command"}
         return(error_response)
@@ -72,9 +76,31 @@ def getTempCommand(devkey):
     response = {}
     if (devkey.endswith("0x4c")):
         # probably want to make this more flexible
-        logging.debug('Device %s: %s', devkey, ": EMC2101 internal temp={}C, external temp={}C".format(device[devkey].internal_temperature, device[devkey].external_temperature))
-        # need to cast the values to strings or we loose the precision of the external temp sensor
-        response = {devkey : {"internal": str(device[devkey].internal_temperature), "external": str(device[devkey].external_temperature)}}
+        logging.debug('Device %s: %s', devkey, "EMC2101 internal temp={}C, external temp={}C".format(device[devkey].internal_temperature, device[devkey].external_temperature))
+        response = {devkey : {"internal": device[devkey].internal_temperature, "external": device[devkey].external_temperature}}
+    else:
+        response = {"Error": "Unsupported device"}
+    return(response)
+
+def getFanSpeedCommand(devkey):
+    "Get the fan speed from the given device"
+    response = {}
+    if (devkey.endswith("0x4c")):
+        # probably want to make this more flexible
+        logging.debug('Device %s: %s', devkey, "EMC2101 fan speed={}RPM".format(device[devkey].fan_speed))
+        response = {devkey : {"fan_speed": device[devkey].fan_speed}}
+    else:
+        response = {"Error": "Unsupported device"}
+    return(response)
+
+def setManualFanSpeedCommand(devkey, duty):
+    "Set the manual fan speed on the given device"
+    response = {}
+    if (devkey.endswith("0x4c")):
+        # probably want to make this more flexible
+        logging.debug('Device %s: %s', devkey, "EMC2101 setting fan speed={}%".format(duty))
+        response = {devkey : {"manual_fan_speed": duty}}
+        device[devkey].manual_fan_speed = duty
     else:
         response = {"Error": "Unsupported device"}
     return(response)

@@ -63,7 +63,7 @@ with open(fifo_path, 'w') as fifow:
        try:
            json_command = json.loads(argv[3])
        except ValueError:  # includes simplejson.decoder.JSONDecodeError
-           print('Decoding JSON has failed')
+           logging.info('Decoding JSON has failed')
        else:
            # Do some stuff and return a response
            fifow.write('{"Request": ' + argv[3] + '}')
